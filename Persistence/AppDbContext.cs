@@ -5,11 +5,19 @@ namespace AspNetCoreAngularApp.Persistence
 {
     public class AppDbContext :DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
+        
+          public DbSet<Make> Makes { get; set; } 
+          public DbSet<Feature> Features {get; set;} 
+          public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
         {
           
-        } 
-          public DbSet<Make> Makes { get; set; } 
-          public DbSet<Feature> Features {get; set;}
+        }  
+        protected override void OnModelCreating(ModelBuilder modelBuilder){ 
+            //Creeating composit key for VehicleFeature class
+                modelBuilder.Entity<VehicleFeature>().HasKey(vf => new { 
+                    vf.VehicleId, 
+                    vf.FeatureId
+                });
+        }
     }
 }
