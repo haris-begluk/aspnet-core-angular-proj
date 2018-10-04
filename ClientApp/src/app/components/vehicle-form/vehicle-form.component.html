@@ -12,7 +12,15 @@
         <option value=""></option> 
         <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
     </select>
-  </div> 
+  </div>  
+  <p>Is this vehicle registred?</p> 
+  <div class="radio"> 
+      <label for="registred" class="radio-inline">
+      <input type="radio" name="isRegistred" id="registred" value="true">Yes</label>
+      <label for="notRegistred"  class="radio-inline">
+      <input type="radio" name="isRegistred" id="notRegistred" value="false">No
+    </label>
+  </div>
   <h2>Features</h2> 
   <div class="checkbox" *ngFor="let f of features">
     <label for="feature{{f.id}}">
