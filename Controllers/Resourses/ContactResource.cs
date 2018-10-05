@@ -1,8 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AspNetCoreAngularApp.Controllers.Resourses
 {
-    public class ContactResource{
+    public class ContactResource{ 
+        [Required] 
+        [StringLength(255)]
         public string Name { get; set; }  
-        public string Email { get; set; } 
+         [StringLength(255)] 
+        public string Email { get; set; }  
+        [Required] 
+        [StringLength(255)]
+
         public string Phone { get; set; } 
     }
 }
