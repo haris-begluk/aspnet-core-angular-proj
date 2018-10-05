@@ -26,23 +26,14 @@ namespace AspNetCoreAngularApp.Mapping
             .ForMember(v => v.ContactPhone, opt =>opt.MapFrom(vr => vr.Contact.Phone))
             .ForMember(v => v.Features, opt =>opt.Ignore()) 
             .AfterMap((vr, v) =>{
-               //Remove unselected features   
-               var removedFeatures = new List<VehicleFeature>();
-               foreach (var f in v.Features)
-               if(!vr.Features.Contains(f.FeatureId))  
-                   removedFeatures.Add(f); 
-
+            //Remove unselected features   
+              var removedFeatures =  v.Features.Where(f => !vr.Features.Contains(f.FeatureId)).ToList();
                    foreach (var rf in removedFeatures)
                         v.Features.Remove(rf);
-                   
-                  
-                
-               //Add new Features 
-               foreach (var id in vr.Features)
-                   if(!v.Features.Any(f => f.FeatureId == id))
-                        v.Features.Add(new VehicleFeature{FeatureId = id});
-                   
-               
+            //Add new Features 
+              var addedFeatures =  vr.Features.Where(id => !v.Features.Any(f => f.FeatureId == id)); 
+              foreach (var id in addedFeatures)
+                 v.Features.Add(new VehicleFeature{FeatureId = id});
             });
 
         }
