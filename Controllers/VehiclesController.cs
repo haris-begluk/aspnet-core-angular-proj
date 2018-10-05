@@ -23,37 +23,27 @@ namespace AspNetCoreAngularApp.Controllers
         public async Task<IActionResult> CreateVehicle([FromBody]VehicleResource vehicleResource)
         { 
             if(!ModelState.IsValid) 
-            return BadRequest(ModelState);//when we pass ModelState to view we can display error messages to client
-           
-        //    if(true){ //Business Rule Validation
-        //        ModelState.AddModelError("...", "Error"); 
-        //        return BadRequest(ModelState);
-        //    } 
-            var model = await context.Models.FindAsync(vehicleResource.ModelId);  
-            if(model == null){
-                ModelState.AddModelError("ModelId", "Invalid Model!"); 
-                return BadRequest(ModelState);
-            }
+            return BadRequest(ModelState);
+         
+            
             var vehicle = mapper.Map<VehicleResource, Vehicle>(vehicleResource);  
             vehicle.LastUpdate = DateTime.Now;
             context.Vehicles.Add(vehicle); 
             await context.SaveChangesAsync(); 
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle); 
-            return Ok(result); 
-            /* 
+            return Ok(result); } 
             
-            {"modelId":15,
-                "isRegistered":true,
-                "contact": {
-                "name":"name", 
-                "phone": "phone", 
-                "email": "email"
-                },
-                "lastUpdate":"2001-01-01T00:00:00",
-                "features":[1,3,4]
-                }
-                
-             */
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody]VehicleResource vehicleResource)
+        { 
+            if(!ModelState.IsValid) 
+            return BadRequest(ModelState);
+            var vehicle =await context.Vehicles.FindAsync(id);
+            mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);  
+            vehicle.LastUpdate = DateTime.Now;
+            await context.SaveChangesAsync(); 
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle); 
+            return Ok(result); 
         }
     }
 }
