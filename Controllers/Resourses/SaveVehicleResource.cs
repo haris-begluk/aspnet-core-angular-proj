@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using AspNetCoreAngularApp.Models;
+using AspNetCoreAngularApp.Core.Models;
 
 namespace AspNetCoreAngularApp.Controllers.Resourses
 {

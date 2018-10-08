@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using AspNetCoreAngularApp.Models;
+using AspNetCoreAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
-
+using AspNetCoreAngularApp.Core;
 namespace AspNetCoreAngularApp.Persistence
 {
     public class VehicleRepository : IVehicleRepository

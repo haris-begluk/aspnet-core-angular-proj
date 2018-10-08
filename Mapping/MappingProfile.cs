@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AspNetCoreAngularApp.Controllers.Resourses;
-using AspNetCoreAngularApp.Models;
+using AspNetCoreAngularApp.Core.Models;
 using AutoMapper;
 
 namespace AspNetCoreAngularApp.Mapping

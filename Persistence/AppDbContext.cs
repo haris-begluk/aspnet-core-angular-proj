@@ -1,4 +1,4 @@
-using AspNetCoreAngularApp.Models;
+using AspNetCoreAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreAngularApp.Persistence

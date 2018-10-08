@@ -1,3 +1,4 @@
+using AspNetCoreAngularApp.Core;
 using AspNetCoreAngularApp.Persistence;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;

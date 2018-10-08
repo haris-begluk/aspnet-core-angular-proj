@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using AspNetCoreAngularApp.Models;
+using AspNetCoreAngularApp.Core.Models;
 
-namespace AspNetCoreAngularApp.Persistence
+namespace AspNetCoreAngularApp.Core
 {
     public interface IVehicleRepository
     {
