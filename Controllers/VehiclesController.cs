@@ -47,7 +47,8 @@ namespace AspNetCoreAngularApp.Controllers
                 return NotFound();
             mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource, vehicle);
             vehicle.LastUpdate = DateTime.Now;
-            await unitOfWork.CompleteAsync();
+            await unitOfWork.CompleteAsync(); 
+            vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
             return Ok(result);
         }
