@@ -8,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehicleFormComponent implements OnInit {
   makes: any[];  
-  models: any[];
+  models: any[]; 
+  features: any[];
   vehicle: any ={ 
     features:[], 
     contact:{}
   };
-  features: any[];
+ 
   constructor(private vehicleService:VehicleService 
   ) { }
 
@@ -35,6 +36,10 @@ export class VehicleFormComponent implements OnInit {
       var index = this.vehicle.features.indexOf(featureId); 
       this.vehicle.features.splice(index,1);
     }
+  } 
+  submit(){
+    this.vehicleService.create(this.vehicle) 
+    .subscribe(x => console.log(x));
   }
 
 }
