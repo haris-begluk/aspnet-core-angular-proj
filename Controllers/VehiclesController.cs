@@ -13,14 +13,13 @@ namespace AspNetCoreAngularApp.Controllers
     public class VehiclesController : Controller
     {
         private IMapper mapper;
-        private AppDbContext context;
         private readonly IVehicleRepository repository;
-        public VehiclesController(IMapper mapper, AppDbContext context, IVehicleRepository repository)
+        private readonly IUnitOfWork unitOfWork;
+        public VehiclesController(IMapper mapper,  IVehicleRepository repository, IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
             this.repository = repository;
-            this.context = context;
             this.mapper = mapper;
-
         }
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody]SaveVehicleResource vehicleResource)
@@ -31,7 +30,8 @@ namespace AspNetCoreAngularApp.Controllers
 
             var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
-            context.Vehicles.Add(vehicle);
+            repository.Add(vehicle);
+            await unitOfWork.CompleteAsync();
             vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
             return Ok(result);
@@ -47,18 +47,18 @@ namespace AspNetCoreAngularApp.Controllers
                 return NotFound();
             mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource, vehicle);
             vehicle.LastUpdate = DateTime.Now;
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
             var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
             return Ok(result);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
-            var vehicle = await context.Vehicles.FindAsync(id);
+            var vehicle = await repository.GetVehicle(id, includeRelated: false);
             if (vehicle == null)
                 return NotFound();
-            context.Remove(vehicle);
-            await context.SaveChangesAsync();
+            repository.Remove(vehicle);
+            await unitOfWork.CompleteAsync();
             return Ok(id);
         }
         [HttpGetAttribute("{id}")]
