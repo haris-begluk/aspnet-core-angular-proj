@@ -51,8 +51,10 @@ export class VehicleFormComponent implements OnInit {
     Observable.forkJoin(sources).subscribe( data => {
       this.makes = data[0]; 
       this.features = data[1];  
-      if(this.vehicle.id)
-      this.setVehicle(data[2]);
+      if(this.vehicle.id){
+      this.setVehicle(data[2]);  
+      this.populateModels();
+      }
     }, err => { 
       if(err.status == 404) 
       this.router.navigate(['/home']);
@@ -67,10 +69,13 @@ export class VehicleFormComponent implements OnInit {
     this.vehicle.features = _.pluck(v.features, 'id');
   }
   onMakeChange(){
-   var selectedMake = this.makes.find( m => m.id == this.vehicle.makeId) 
-      this.models =selectedMake ? selectedMake.models: []; 
+    this.populateModels();
       delete this.vehicle.modelId;
-  } 
+  }  
+  private populateModels(){
+    var selectedMake = this.makes.find( m => m.id == this.vehicle.makeId) 
+    this.models =selectedMake ? selectedMake.models: []; 
+  }
   onFeatureToggle(featureId, $event){
     if($event.target.checked){
       this.vehicle.features.push(featureId);
