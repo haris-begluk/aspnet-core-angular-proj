@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/browser";
 import { AppErrorHandler } from './app-error-handler';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -16,7 +17,9 @@ import { HttpModule } from '@angular/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
+Sentry.init({
+  dsn: "https://c3dccfbfaaf644809993177839b211c7@sentry.io/1300187"
+});
 @NgModule({
   declarations: [
     AppComponent,
