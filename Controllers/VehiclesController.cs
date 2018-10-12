@@ -24,11 +24,10 @@ namespace AspNetCoreAngularApp.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody]SaveVehicleResource vehicleResource)
-        {
+        { 
+            
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-
             var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
             repository.Add(vehicle);

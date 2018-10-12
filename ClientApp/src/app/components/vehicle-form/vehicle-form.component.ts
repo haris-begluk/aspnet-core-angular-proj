@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { VehicleService } from '../../services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -15,14 +16,15 @@ export class VehicleFormComponent implements OnInit {
     contact:{}
   };
  
-  constructor(private vehicleService:VehicleService 
+  constructor(private vehicleService:VehicleService , 
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() { 
     this.vehicleService.getMakes().subscribe(makes =>this.makes = makes
     );  
-    this.vehicleService.getFeatures().subscribe(features => this.features = features)
-   
+    this.vehicleService.getFeatures().subscribe(features => this.features = features);
+    
   } 
   onMakeChange(){
    var selectedMake = this.makes.find( m => m.id == this.vehicle.makeId) 
@@ -39,7 +41,10 @@ export class VehicleFormComponent implements OnInit {
   } 
   submit(){
     this.vehicleService.create(this.vehicle) 
-    .subscribe(x => console.log(x));
+    .subscribe(x => console.log(x), 
+   err => { 
+    this.toastr.error('An error happend!', "Error", {timeOut:5000, titleClass:'Error'});
+   });
   }
 
 }
