@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using AspNetCoreAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreAngularApp.Core;
+using System.Collections.Generic;
+
 namespace AspNetCoreAngularApp.Persistence
 {
     public class VehicleRepository : IVehicleRepository
@@ -31,6 +33,13 @@ namespace AspNetCoreAngularApp.Persistence
         } 
         public void Remove(Vehicle vehicle){
             context.Vehicles.Remove(vehicle);
+        } 
+        public async Task<IEnumerable<Vehicle>> GetVehicles(){
+            return await context.Vehicles.Include(v => v.Model) 
+            .ThenInclude(m => m.Make) 
+            .Include(v => v.Features) 
+            .ThenInclude(vf => vf.Feature) 
+            .ToListAsync();
         }
     }
 }
