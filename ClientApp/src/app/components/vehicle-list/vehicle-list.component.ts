@@ -29,6 +29,10 @@ export class VehicleListComponent implements OnInit {
     if(this.filter.modelId)
     vehicles = vehicles.filter(v => v.model.id == this.filter.modelId); 
     this.vehicles = vehicles;
+  } 
+  resetFilter(){
+    this.filter = {}; 
+    this.onFilterChange();
   }
 
 }
