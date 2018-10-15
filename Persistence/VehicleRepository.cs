@@ -7,6 +7,7 @@ using aspnet_core_angular_proj.Core.Models;
 using System.Linq;
 using System.Linq.Expressions;
 using System;
+using aspnet_core_angular_proj.Extensions;
 
 namespace AspNetCoreAngularApp.Persistence
 {
@@ -53,19 +54,14 @@ namespace AspNetCoreAngularApp.Persistence
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>(){ 
                 ["make"] = v => v.Model.Make.Name,  
                 ["model"] = v => v.Model.Name, 
-                ["contactName"] = v => v.ContactName, 
-                ["id"] = v => v.Id
+                ["contactName"] = v => v.ContactName
 
             };  
-            query = ApplyOredering(queryObj, query, columnsMap);
+            
+            query = query.ApplyOrdering(queryObj, columnsMap);
             
             return await query.ToListAsync();
         } 
-        private IQueryable<Vehicle> ApplyOredering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle,object>>> columnsMap){
-            if(queryObj.IsSortAscending) 
-            return  query = query.OrderBy(columnsMap[queryObj.SortBy]);
-            else
-            return query = query.OrderByDescending(columnsMap[queryObj.SortBy]); 
-        }
+        
     }
 }
