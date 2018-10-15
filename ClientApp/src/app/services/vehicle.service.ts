@@ -8,6 +8,10 @@ export class VehicleService {
   getMakes(){
     return this.http.get("/api/makes") 
     .map(result => result.json());
+  }  
+  getModels(){
+    return this.http.get("/api/models") 
+    .map(result => result.json());
   } 
   getFeatures(){
     return this.http.get("/api/features") 
