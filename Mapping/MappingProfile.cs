@@ -15,7 +15,8 @@ namespace AspNetCoreAngularApp.Mapping
         { 
             //Domain to API Resource
             CreateMap<Make, MakeResource>(); 
-            CreateMap<Make, KeyValuePairResource>(); 
+            CreateMap<Make, KeyValuePairResource>();  
+            CreateMap<Model,ModelResource>();
             CreateMap<Model, KeyValuePairResource>(); 
             CreateMap<Feature, KeyValuePairResource>();  
              CreateMap<Vehicle,SaveVehicleResource>()
