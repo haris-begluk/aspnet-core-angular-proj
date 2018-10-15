@@ -1,6 +1,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using aspnet_core_angular_proj.Controllers.Resourses;
+using aspnet_core_angular_proj.Core.Models;
 using AspNetCoreAngularApp.Controllers.Resourses;
 using AspNetCoreAngularApp.Core.Models;
 using AutoMapper;
@@ -25,7 +27,8 @@ namespace AspNetCoreAngularApp.Mapping
             .ForMember(vr => vr.Contact, opt => opt.MapFrom(v => new ContactResource{Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone}))
             .ForMember(vr => vr.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new KeyValuePairResource{ Id = vf.Feature.Id, Name = vf.Feature.Name })));
 
-            //Api Resource to Domain 
+            //Api Resource to Domain  
+            CreateMap<FilterResource, Filter>();
             CreateMap<SaveVehicleResource,Vehicle>() 
             .ForMember(v => v.Id, opt => opt.Ignore())
             .ForMember(v => v.ContactName, opt =>opt.MapFrom(vr => vr.Contact.Name))

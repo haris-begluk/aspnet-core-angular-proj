@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using aspnet_core_angular_proj.Core.Models;
 using AspNetCoreAngularApp.Core.Models;
 
 namespace AspNetCoreAngularApp.Core
@@ -9,6 +10,6 @@ namespace AspNetCoreAngularApp.Core
         Task<Vehicle> GetVehicle(int id, bool includeRelated = true ); 
         void Add(Vehicle vehicle); 
         void Remove(Vehicle vehicle); 
-        Task<IEnumerable<Vehicle>> GetVehicles();
+        Task<IEnumerable<Vehicle>> GetVehicles(Filter filter);
     }
 }

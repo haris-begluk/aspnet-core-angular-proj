@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using aspnet_core_angular_proj.Controllers.Resourses;
+using aspnet_core_angular_proj.Core.Models;
 using AspNetCoreAngularApp.Controllers.Resourses;
 using AspNetCoreAngularApp.Core;
 using AspNetCoreAngularApp.Core.Models;
@@ -73,9 +75,10 @@ namespace AspNetCoreAngularApp.Controllers
             return Ok(vehicleResource);
         }  
         [HttpGet]
-        public async Task<IEnumerable<VehicleResource>> GetVehicles()
-        {
-            var vehicles = await repository.GetVehicles(); 
+        public async Task<IEnumerable<VehicleResource>> GetVehicles(FilterResource filterResource)
+        { 
+            var filter = mapper.Map<FilterResource, Filter>(filterResource);
+            var vehicles = await repository.GetVehicles(filter); 
             return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
         }
     }
