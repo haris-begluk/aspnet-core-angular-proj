@@ -37,7 +37,7 @@ export class VehicleFormComponent implements OnInit {
     private toastr: ToastrService
   ) {  
     route.params.subscribe(p => { 
-      this.vehicle.id= +p['id'];
+      this.vehicle.id= +p['id'] || 0;
     });
   }
 
@@ -85,16 +85,15 @@ export class VehicleFormComponent implements OnInit {
     }
   } 
   submit(){
-    this.vehicleService.create(this.vehicle) 
-    .subscribe(x => console.log(x));
-  }
-  delete(){
-    if(confirm("Are you sure?")) 
-    {
-      this.vehicleService.delete(this.vehicle.id) 
-      .subscribe(x => {
-        this.router.navigate(['/home']);
-      })
-    }
+    var result$ = (this.vehicle.id) ? this.vehicleService.update(this.vehicle) : this.vehicleService.create(this.vehicle); 
+    result$.subscribe(vehicle => {
+      this.toastr.success('Success', 
+        'Data was sucessfully saved.', { timeOut:5000, closeButton:true}); 
+        /**theme: 'bootstrap',
+        showClose: true,
+        timeout: 5000 */
+      this.router.navigate(['/vehicles/', vehicle.id])
+    });
+    
   }
 }

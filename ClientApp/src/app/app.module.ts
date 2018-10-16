@@ -18,6 +18,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
 Sentry.init({
   dsn: "https://c3dccfbfaaf644809993177839b211c7@sentry.io/1300187"
 });
@@ -30,7 +31,8 @@ Sentry.init({
     FetchDataComponent,
     VehicleFormComponent,
     VehicleListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ViewVehicleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -43,7 +45,8 @@ Sentry.init({
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent }, 
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent }, 
+      { path: 'vehicles/:id', component: ViewVehicleComponent }, 
       { path: 'vehicles', component: VehicleListComponent }, 
       { path: 'home', component: HomeComponent}, 
       { path: 'counter', component: CounterComponent },
