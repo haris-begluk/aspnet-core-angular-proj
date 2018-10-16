@@ -9,15 +9,18 @@ using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace aspnet_core_angular_proj.Controllers
 {
     // /api/vehicles/1/photos 
     [Route("/api/vehicles/{vehicleId}/photos")]
     public class PhotosController : Controller
-    { 
-        private readonly int MAX_BYTES =10 * 1024 * 1024; 
-        private readonly string[] ACCEPTED_FILE_TYPES = new []{ ".jpg", ".jpeg", ".png"};
+    {
+        
+        // private readonly int MAX_BYTES =10 * 1024 * 1024; 
+        // private readonly string[] ACCEPTED_FILE_TYPES = new []{ ".jpg", ".jpeg", ".png"}; 
+        private readonly PhotoSettings photoSettings;
         private readonly IHostingEnvironment host; 
          public IVehicleRepository Repository { get; }
         public IUnitOfWork UnitOfWork { get; }
@@ -27,8 +30,9 @@ namespace aspnet_core_angular_proj.Controllers
         IHostingEnvironment host, 
         IVehicleRepository repository,
         IUnitOfWork unitOfWork,
-        IMapper mapper)
-        {
+        IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
+        { 
+            this.photoSettings = options.Value;
             this.host = host;
             Repository = repository;
             UnitOfWork = unitOfWork;
@@ -49,8 +53,8 @@ namespace aspnet_core_angular_proj.Controllers
             if(file == null) 
             return BadRequest("Null file."); 
             if(file.Length == 0) return BadRequest("Empty file.");  
-            if(file.Length > MAX_BYTES) return BadRequest("Maximum file size exceeded. 10MB"); 
-            if(!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(file.FileName))) 
+            if(file.Length > photoSettings.MaxBytes) return BadRequest("Maximum file size exceeded. 10MB"); 
+            if(!photoSettings.isSuported(file.FileName)) 
             return BadRequest("Invalid file type.");
 
 

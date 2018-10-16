@@ -1,3 +1,4 @@
+using aspnet_core_angular_proj.Core.Models;
 using AspNetCoreAngularApp.Core;
 using AspNetCoreAngularApp.Persistence;
 using AutoMapper;
@@ -22,8 +23,10 @@ namespace AspNetCoreAngularApp
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {   services.AddScoped<IUnitOfWork, UnitOfWork>();
+        public void ConfigureServices(IServiceCollection services) 
+        {   
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddAutoMapper();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
