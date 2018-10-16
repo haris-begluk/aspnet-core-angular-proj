@@ -13,7 +13,9 @@ export class VehicleListComponent implements OnInit {
   makes: KeyValuePair[];  
   models: any[]; 
   allModels:any[];
-  query: any = {}; 
+  query: any = { 
+    pageSize:3
+  }; 
   columns = [
     {title:'Id'},
     {title:'Contact Name', key:'contactName', isSortable: true},
@@ -58,6 +60,10 @@ export class VehicleListComponent implements OnInit {
       this.query.sortBy = columnName; 
       this.query.isSortAscending = true;
     } 
+    this.populateVehicles();
+  } 
+  onPageChange(page){
+    this.query.page = page; 
     this.populateVehicles();
   }
 } 

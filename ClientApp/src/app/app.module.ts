@@ -17,6 +17,7 @@ import { HttpModule } from '@angular/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { PaginationComponent } from './components/pagination/pagination.component';
 Sentry.init({
   dsn: "https://c3dccfbfaaf644809993177839b211c7@sentry.io/1300187"
 });
@@ -28,7 +29,8 @@ Sentry.init({
     CounterComponent,
     FetchDataComponent,
     VehicleFormComponent,
-    VehicleListComponent
+    VehicleListComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
