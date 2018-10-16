@@ -1,17 +1,17 @@
 <h2>Vehicles</h2> 
-<p>{{ filter | json }}</p>
+<p>{{ query | json }}</p>
 <p>
   <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
 </p>  
 <div class="well">
   <div class="form-group"><label for="make">Make</label>
-    <select name="make" id="make" class="form-control"[(ngModel)]="filter.makeId" (change)="onFilterChange()">
+    <select name="make" id="make" class="form-control"[(ngModel)]="query.makeId" (change)="onFilterChange()">
       <option value=""></option> 
       <option *ngFor="let m of makes" value="{{m.id}}">{{m.name}}</option>
     </select>
   </div> 
   <div class="form-group"><label for="make">Model</label>
-    <select name="model" id="model" class="form-control"[(ngModel)]="filter.modelId" (change)="onModelChange()">
+    <select name="model" id="model" class="form-control"[(ngModel)]="query.modelId" (change)="onModelChange()">
       <option value=""></option> 
       <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
     </select>
@@ -23,9 +23,9 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>Make</th>
-      <th>Model</th>
-      <th>Contact Name</th>
+      <th (click)="sortBy('make')">Make</th>
+      <th (click)="sortBy('model')">Model</th>
+      <th (click)="sortBy('contactName')">Contact Name</th>
       <th></th>
     </tr>
   </thead>
