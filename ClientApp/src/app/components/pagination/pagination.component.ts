@@ -12,7 +12,7 @@ import { Component,
 export class PaginationComponent implements OnChanges {
 
   @Input('total-items') totalItems;
-	@Input('page-size') pageSize = 10;
+	@Input('page-size') pageSize;
 	@Output('page-changed') pageChanged = new EventEmitter();
 	pages: any[];
 	currentPage = 1; 
@@ -23,7 +23,7 @@ export class PaginationComponent implements OnChanges {
 		this.pages = [];
 		for (var i = 1; i <= pagesCount; i++)
 			this.pages.push(i);
-     console.log(this);
+     //console.log(this);
 	}
  	changePage(page){
 		this.currentPage = page; 
@@ -40,7 +40,7 @@ export class PaginationComponent implements OnChanges {
 			return; 
 		
 		this.currentPage++;
-    console.log("next", this);
+    //console.log("next", this);
 		this.pageChanged.emit(this.currentPage);
 	}
 

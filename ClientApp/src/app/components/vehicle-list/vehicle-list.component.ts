@@ -1,3 +1,4 @@
+import { AppPage } from './../../../../e2e/app.po';
 import { KeyValuePair } from './../../models/KeyValuePair';
 import { VehicleService } from './../../services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
@@ -8,13 +9,13 @@ import { Vehicle } from '../../models/vehicle';
   templateUrl: './vehicle-list.component.html',
   styleUrls: ['./vehicle-list.component.css']
 })
-export class VehicleListComponent implements OnInit {
+export class VehicleListComponent implements OnInit { 
   vehicles: Vehicle[];  
   makes: KeyValuePair[];  
   models: any[]; 
   allModels:any[];
   query: any = { 
-    pageSize:3
+    pageSize :3
   }; 
   columns = [
     {title:'Id'},
@@ -23,6 +24,7 @@ export class VehicleListComponent implements OnInit {
     {title:'Model', key:'model', isSortable: true}, 
     {}
   ];
+  queryResult: any = {};
   
   constructor(private vehicleService: VehicleService) { }
 
@@ -35,7 +37,7 @@ export class VehicleListComponent implements OnInit {
   }  
   private populateVehicles(){
     this.vehicleService.getVehicles(this.query)
-    .subscribe(vehicles => this.vehicles = vehicles);
+    .subscribe(result => this.queryResult = result);
   } 
   private populateModels(makeId){ 
     this.models = this.allModels.filter(m => m.makeId == this.query.makeId);    
@@ -45,13 +47,18 @@ export class VehicleListComponent implements OnInit {
   onModelChange(){
     this.populateVehicles();
   }
-  onFilterChange(){   
+  onFilterChange(){    
+    this.query.page = 1; 
+    //this.query.pageSize = this.PAGE_SIZE;
     this.populateModels(this.query.makeId); 
     this.populateVehicles();
   } 
   resetFilter(){
-    this.query = {}; 
-    this.onFilterChange();
+    this.query = { 
+      page:1, 
+      pageSize: 3
+    }; 
+    this.populateVehicles();
   } 
   sortBy(columnName){
     if(this.query.sortBy === columnName){
