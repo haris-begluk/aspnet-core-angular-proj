@@ -1,8 +1,10 @@
 namespace aspnet_core_angular_proj.Extensions
 {
-    public class IQueryObject
+    public interface IQueryObject
     {
-       public string SortBy { get; set; }  
-        public bool IsSortAscending { get; set; }
+        string SortBy { get; set; }  
+         bool IsSortAscending { get; set; } 
+         int Page { get; set; }
+         int PageSize { get; set; }
     }
 }
