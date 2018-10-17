@@ -27,7 +27,12 @@
       </ul>
       <br/> 
       <h2>Photos</h2> 
-      <input type="file" (change)="uploadPhoto()" #fileInput >  
+      <input type="file" (change)="uploadPhoto()" #fileInput >   
+      <div class="progress" *ngIf="progress ">
+        <div class="progress-bar" [style.width]="progress.percentage + '%'">
+          <span class="sr-only">{{ progress.percentage }}% Complete</span>
+        </div>
+      </div>
       <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" class="img-thumbnail">
       <br/>
       <p> 

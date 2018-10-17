@@ -1,3 +1,5 @@
+import { BrowserXhr } from '@angular/http';
+import { BrowserXhrWithProgress, ProgressService } from './services/progress.service';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import * as Sentry from "@sentry/browser";
 import { AppErrorHandler } from './app-error-handler';
@@ -19,7 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
-import { PhotoService } from './services/photo.service';
+import { PhotoService } from './services/photo.service'; 
+
+
 Sentry.init({
   dsn: "https://c3dccfbfaaf644809993177839b211c7@sentry.io/1300187"
 });
@@ -56,8 +60,10 @@ Sentry.init({
   ],
   providers: [ 
     VehicleService, 
-    PhotoService,
-    { provide: ErrorHandler, useClass: AppErrorHandler}
+    PhotoService, 
+    ProgressService,
+    { provide: ErrorHandler, useClass: AppErrorHandler},
+    { provide: BrowserXhr, useClass: BrowserXhrWithProgress}
   ],
   bootstrap: [AppComponent]
 })
