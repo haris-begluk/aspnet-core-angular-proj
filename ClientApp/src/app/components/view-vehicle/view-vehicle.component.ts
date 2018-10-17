@@ -58,7 +58,8 @@ export class ViewVehicleComponent implements OnInit {
   } 
   uploadPhoto(){
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement; 
-
+    var file = nativeElement.files[0]; 
+    nativeElement.value =''; //clears file upload input fild name
      this.progressService.startTracking()
     .subscribe(progress => {
       // console.log(progress);
@@ -68,7 +69,12 @@ export class ViewVehicleComponent implements OnInit {
     },
     null,
     () => { this.progress = null; });
-    this.photoService.upload(nativeElement.files[0], this.vehicleId)
-    .subscribe(photo => this.photos.push(photo));
+    this.photoService.upload(file, this.vehicleId)
+    .subscribe(photo => this.photos.push(photo),  
+    err => {
+     // console.log('ERROR'); 
+      this.toastr.error(err.text(), "Error", {timeOut:5000});
+  }
+    );
   }
 }
