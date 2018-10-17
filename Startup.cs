@@ -1,4 +1,6 @@
+using aspnet_core_angular_proj.Core;
 using aspnet_core_angular_proj.Core.Models;
+using aspnet_core_angular_proj.Persistence;
 using AspNetCoreAngularApp.Core;
 using AspNetCoreAngularApp.Persistence;
 using AutoMapper;
@@ -27,7 +29,8 @@ namespace AspNetCoreAngularApp
         {   
             services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>(); 
+            services.AddScoped<IPhotoRepository,PhotoRepository>();
             services.AddAutoMapper();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
