@@ -2,8 +2,8 @@
 <div>
    <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Vehicle</a></li>
-    <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a></li>
+    <li role="presentation" class="active"><a href="basic" aria-controls="basic" role="tab" data-toggle="tab">Vehicle</a></li>
+    <li role="presentation"><a href="photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a></li>
   </ul>
    <!-- Tab panes -->
   <div class="tab-content" *ngIf="vehicle">
@@ -25,8 +25,12 @@
         <li>Contact Phone: {{ vehicle.contact.phone }}</li>
         <li>Contact Email: {{ vehicle.contact.email }}</li>
       </ul>
+      <br/> 
+      <h2>Photos</h2> 
+      <input type="file" (change)="uploadPhoto()" #fileInput > 
       <br/>
-      <p>
+      <p> 
+         
         <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
         <button class="btn btn-danger" (click)="delete()">Delete</button>
         <a class="btn btn-default" [routerLink]="['/vehicles']">View All Vehicles</a>
@@ -34,7 +38,7 @@
     </div>
     <!-- Photos tab -->
     <div role="tabpanel" class="tab-pane" id="photos">
-      <h2>Photos</h2>
+      
     </div>
   </div>
 </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';  
 import { ToastrService } from 'ngx-toastr';
 import { VehicleService } from './../../services/vehicle.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-view-vehicle',
@@ -9,10 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./view-vehicle.component.css']
 })
 export class ViewVehicleComponent implements OnInit {
-
+ 
+  @ViewChild('fileInput') fileInput:ElementRef;
   vehicle: any;
   vehicleId: number; 
-   constructor(
+   constructor( 
+    private photoService:PhotoService,
     private route: ActivatedRoute, 
     private router: Router,
     private toastr: ToastrService,
@@ -44,5 +47,10 @@ export class ViewVehicleComponent implements OnInit {
           this.router.navigate(['/vehicles']);
         });
     } 
+  } 
+  uploadPhoto(){
+    var nativeElement: HTMLInputElement = this.fileInput.nativeElement; 
+    this.photoService.upload(nativeElement.files[0], this.vehicleId)
+    .subscribe(x => console.log(x));
   }
 }
