@@ -8,6 +8,7 @@ using AspNetCoreAngularApp.Core;
 using AspNetCoreAngularApp.Core.Models;
 using AspNetCoreAngularApp.Persistence;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +25,8 @@ namespace AspNetCoreAngularApp.Controllers
             this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.mapper = mapper;
-        }
+        } 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody]SaveVehicleResource vehicleResource)
         { 
@@ -39,7 +41,7 @@ namespace AspNetCoreAngularApp.Controllers
             var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
             return Ok(result);
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVehicle(int id, [FromBody]SaveVehicleResource vehicleResource)
         {
@@ -54,7 +56,8 @@ namespace AspNetCoreAngularApp.Controllers
             vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
             return Ok(result);
-        }
+        } 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {

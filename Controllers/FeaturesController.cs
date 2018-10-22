@@ -4,6 +4,7 @@ using AspNetCoreAngularApp.Controllers.Resourses;
 using AspNetCoreAngularApp.Core.Models;
 using AspNetCoreAngularApp.Persistence;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,8 @@ namespace AspNetCoreAngularApp.Controllers
             this.Mapper = mapper;
             this.Context = context;
 
-        } 
+        }  
+        //[Authorize]
         [HttpGet("/api/features")]
         public async Task<IEnumerable<KeyValuePairResource>> GetFeatures()
         {

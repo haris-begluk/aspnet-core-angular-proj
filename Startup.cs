@@ -4,6 +4,7 @@ using aspnet_core_angular_proj.Persistence;
 using AspNetCoreAngularApp.Core;
 using AspNetCoreAngularApp.Persistence;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,8 +34,19 @@ namespace AspNetCoreAngularApp
             services.AddScoped<IPhotoRepository,PhotoRepository>();
             services.AddAutoMapper();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           
+            services.AddAuthentication(options =>
+            {
+                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://haris-begluk.eu.auth0.com/";
+                options.Audience = "https://movimania.com";
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -58,7 +70,7 @@ namespace AspNetCoreAngularApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
