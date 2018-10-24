@@ -31,6 +31,14 @@
                     <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
                         <span class='glyphicon glyphicon-th-list'></span> Fetch data
                     </a>
+                </li> 
+                <li [routerLinkActive]="['link-active']">
+                    <a (click)="auth.login()" *ngIf="!auth.isAuthenticated()">
+                        <span class='glyphicon glyphicon-user'></span> Login
+                    </a>
+                    <a (click)="auth.logout()" *ngIf="auth.isAuthenticated()">
+                        <span class='glyphicon glyphicon-user'></span> Logout
+                    </a>
                 </li>
             </ul>
         </div>

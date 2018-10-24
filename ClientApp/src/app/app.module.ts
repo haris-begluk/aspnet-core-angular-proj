@@ -1,3 +1,4 @@
+import { Auth } from './services/auth.service';
 import { BrowserXhr } from '@angular/http';
 import { BrowserXhrWithProgress, ProgressService } from './services/progress.service';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
@@ -60,7 +61,8 @@ Sentry.init({
   ],
   providers: [ 
     VehicleService, 
-    PhotoService, 
+    PhotoService,  
+    Auth,
     ProgressService,
     { provide: ErrorHandler, useClass: AppErrorHandler},
     { provide: BrowserXhr, useClass: BrowserXhrWithProgress}
